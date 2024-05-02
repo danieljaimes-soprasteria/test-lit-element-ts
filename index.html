@@ -26,15 +26,23 @@
     </style>
     <script>
       window.onload = (event) => {
+        
         console.log('page is fully loaded');
         const myElement = document.getElementsByTagName('my-element');
         //myElement[0].addEventListener('count-changed', handleOnCounter(event));
+        myElement[0].addEventListener('create', handleCreate)
       };
+      function handleCreate(){
+        document.getElementsByName('description-task')[0].removeAttribute("disabled");
+        document.getElementsByName('btn-save-task')[0].removeAttribute("disabled");
+      }
       function onClickAddTask() {
         const task = document.getElementsByName('description-task')[0].value;
         const myElement = document.getElementsByTagName('my-element')[0];
         myElement.addTask(task);
         document.getElementsByName('description-task')[0].value = ""
+        document.getElementsByName('description-task')[0].setAttribute("disabled", true);
+        document.getElementsByName('btn-save-task')[0].setAttribute("disabled", true);
       }
       function handleOnCounter(e) {
         console.log(e);
@@ -43,10 +51,11 @@
   </head>
   <body>
     <form>
-      <input type="text" name="description-task" />
-      <button type='button' onclick="onClickAddTask()">SAVE</button>
+      <input type="text" name="description-task" disabled/>
+      <button type='button' onclick="onClickAddTask()" name="btn-save-task" disabled>SAVE</button>
     </form>
     <my-element
+      
       name="KARCELES"
       onCustomEvent="(e) => handleOnCounter(e)"
     />

@@ -42,7 +42,7 @@ export class MyElement extends LitElement {
    */
   @property({type: Number})
   count = 0;
-
+  
   override render() {
     return html`
       <h1>TODO LIST</h1>
@@ -50,12 +50,15 @@ export class MyElement extends LitElement {
       <button @click=${this.onClick} part="button">
         Click Count: ${this.count}
       </button>
-      
+      <button @click=${this.onClickCreate} part="button">
+        CREATE
+      </button>
       <ul>
         ${this.todoList.map(
           (value, index) =>
             html`<li>
               ${value}
+              
               <button @click=${() => this.onClickDeleted(index)} part="button">
                 ELIMINAR
               </button>
@@ -66,11 +69,15 @@ export class MyElement extends LitElement {
       <slot></slot>
     `;
   }
+
+  onClickCreate(){
+    this.dispatchEvent(new CustomEvent('create'))
+  }
   addTask(task: string){
     this.todoList.push(task)
     this.requestUpdate();
   }
-  
+
   onClickDeleted(index: number) {
     this.todoList.splice(index, 1);
     this.requestUpdate();
