@@ -16,18 +16,21 @@ import {customElement, property} from 'lit/decorators.js';
  */
 @customElement('my-element')
 export class MyElement extends LitElement {
+  todoList = ['Todo', 'Todo', 'Todo', 'Todo', 'Todo', 'Todo'];
+
   static override styles = css`
     :host {
       display: block;
-      border: solid 5px red;
+      border: solid 1px black;
       padding: 16px;
-      max-width: 800px;
+      margin: 0 auto;
+      width: 900px;
+    }
+    ul > li {
+      padding: 5px;
     }
   `;
 
-  constructor(){
-    super();
-  }
   /**
    * The name to say "Hello" to.
    */
@@ -42,17 +45,49 @@ export class MyElement extends LitElement {
 
   override render() {
     return html`
-      <h1>${this.sayHello(this.name)}!</h1>
-      <button @click=${this._onClick} part="button">
+      <h1>TODO LIST</h1>
+
+      <button @click=${this.onClick} part="button">
         Click Count: ${this.count}
       </button>
+      
+      <ul>
+        ${this.todoList.map(
+          (value, index) =>
+            html`<li>
+              ${value}
+              <button @click=${() => this.onClickDeleted(index)} part="button">
+                ELIMINAR
+              </button>
+            </li>`
+        )}
+      </ul>
+
       <slot></slot>
     `;
   }
+  addTask(task: string){
+    this.todoList.push(task)
+    this.requestUpdate();
+  }
+  
+  onClickDeleted(index: number) {
+    this.todoList.splice(index, 1);
+    this.requestUpdate();
+  }
 
-  private _onClick() {
+  private onClick() {
     this.count++;
-    this.dispatchEvent(new CustomEvent('count-changed'));
+    this.dispatchEvent(
+      new CustomEvent('counter-changed', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        detail: {
+          count: this.count,
+        },
+      })
+    );
   }
 
   /**
