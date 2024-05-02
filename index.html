@@ -50,14 +50,16 @@
     </script>
   </head>
   <body>
-    <form>
-      <input type="text" name="description-task" disabled/>
-      <button type='button' onclick="onClickAddTask()" name="btn-save-task" disabled>SAVE</button>
-    </form>
+    
     <my-element
       
       name="KARCELES"
       onCustomEvent="(e) => handleOnCounter(e)"
-    />
+    >
+    <form>
+      <input type="text" name="description-task" disabled/>
+      <button type='button' onclick="onClickAddTask()" name="btn-save-task" disabled>SAVE</button>
+    </form>
+    </my-element>
   </body>
 </html>

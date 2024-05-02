@@ -53,6 +53,7 @@ export class MyElement extends LitElement {
       <button @click=${this.onClickCreate} part="button">
         CREATE
       </button>
+      <slot></slot>
       <ul>
         ${this.todoList.map(
           (value, index) =>
