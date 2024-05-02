@@ -19,17 +19,20 @@ export class MyElement extends LitElement {
   static override styles = css`
     :host {
       display: block;
-      border: solid 1px gray;
+      border: solid 5px red;
       padding: 16px;
       max-width: 800px;
     }
   `;
 
+  constructor(){
+    super();
+  }
   /**
    * The name to say "Hello" to.
    */
-  @property()
-  name = 'World';
+  @property({type: String})
+  name = 'MUNDO';
 
   /**
    * The number of times the button has been clicked.
